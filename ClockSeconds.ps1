@@ -1,4 +1,7 @@
-﻿param (
+﻿# Copyright 2025 ruticejp
+# Licensed under the Apache License, Version 2.0
+
+param (
     [ValidateSet("ja", "en")]
     [string]$Language = "",
     [switch]$GetStatus,

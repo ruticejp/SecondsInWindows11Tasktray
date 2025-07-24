@@ -1,4 +1,7 @@
 @echo off
+rem Copyright 2025 ruticejp
+rem Licensed under the Apache License, Version 2.0
+
 rem Windows11 Taskbar Clock Seconds Setting GUI Execution Batch
 rem Temporarily bypass PowerShell execution policy to run ClockSeconds.ps1
 rem Multi-language support: Japanese/English
