@@ -134,7 +134,8 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 |------------|------|
 | `ClockSeconds.ps1` | メインのPowerShellスクリプト（GUI版・CUI版両対応） |
 | `RunToggleClockSecondsGUI.bat` | 実行用バッチファイル（推奨・最も簡単） |
-| `README.md` | このドキュメント |
+| `README.md` | このドキュメント（日本語版） |
+| `README_english.md` | 英語版ドキュメント |
 
 ## 🔧 動作環境
 
@@ -148,5 +149,5 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 ## 📞 サポート
 
 - **GitHub Issues**: [問題報告・機能要望](https://github.com/ruticejp/SecondsInWindows11Tasktray/issues)
-- **動作確認**: Windows 11 22H2、23H2で動作確認済み
+- **動作確認**: Windows 11 22H2、23H2、24H2で動作確認済み
 

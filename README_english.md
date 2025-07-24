@@ -139,8 +139,8 @@ In environments without organizational policy restrictions, you can configure se
 |-----------|-------------|
 | `ClockSeconds.ps1` | Main PowerShell script (supports both GUI and CUI versions) |
 | `RunToggleClockSecondsGUI.bat` | Execution batch file (recommended, easiest) |
-| `README.md` | This document (Japanese) |
-| `README_english.md` | This document (English translation) |
+| `README.md` | This document (Japanese version) |
+| `README_english.md` | English version document |
 
 ## 🔧 System Requirements
 
@@ -154,7 +154,7 @@ In environments without organizational policy restrictions, you can configure se
 ## 📞 Support
 
 - **GitHub Issues**: [Bug Reports & Feature Requests](https://github.com/ruticejp/SecondsInWindows11Tasktray/issues)
-- **Compatibility Verified**: Tested on Windows 11 22H2, 23H2
+- **Compatibility Verified**: Tested on Windows 11 22H2, 23H2, 24H2
 
 ---
 
