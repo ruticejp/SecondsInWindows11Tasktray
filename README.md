@@ -1,0 +1,2 @@
+# SecondsInWindows11Tasktray
+Windows11（22H2）でタスクトレイに秒表示できない時に使うツール
