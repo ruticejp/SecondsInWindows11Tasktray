@@ -70,28 +70,68 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Status
 
 ### 🌐 言語設定
 
-#### PowerShell 5.0（Windows標準）
+#### コマンドライン版での言語指定
 ```cmd
-# 日本語表示
-powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language ja
+# 日本語表示で秒表示を有効にする
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Enable -Language ja
 
-# 英語表示
-powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
+# 英語表示で秒表示を無効にする
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Disable -Language en
+
+# 日本語表示で現在の状態を確認
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Status -Language ja
 
 # 自動検出（デフォルト）
 # 言語パラメータを省略すると、システムの言語設定を自動検出
 ```
 
-#### PowerShell 7系
+#### GUI版での言語指定
 ```cmd
-# 日本語表示
-pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language ja
+# 日本語表示でGUIを起動
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language ja
 
-# 英語表示
-pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
+# 英語表示でGUIを起動
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 
 # 自動検出（デフォルト）
-# 言語パラメータを省略すると、システムの言語設定を自動検出
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1
+```
+
+### 💡 使用例とタブ補完
+
+PowerShellのタブ補完機能により、パラメータ名や値を簡単に入力できます：
+
+```cmd
+# パラメータ名の補完
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -E<TAB>  # → -Enable
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -D<TAB>  # → -Disable
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -S<TAB>  # → -Status
+
+# 言語パラメータの値の補完
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language j<TAB>  # → ja
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language e<TAB>  # → en
+```
+
+### 📖 ヘルプ機能
+
+PowerShellの組み込みヘルプ機能を使用してスクリプトの詳細情報を確認できます：
+
+```cmd
+# 基本的な使用方法を表示
+Get-Help .\ClockSeconds.ps1
+
+# 詳細なヘルプを表示
+Get-Help .\ClockSeconds.ps1 -Detailed
+
+# 使用例を表示
+Get-Help .\ClockSeconds.ps1 -Examples
+
+# 完全なヘルプを表示
+Get-Help .\ClockSeconds.ps1 -Full
+
+# 特定のパラメータの詳細を表示
+Get-Help .\ClockSeconds.ps1 -Parameter Language
+Get-Help .\ClockSeconds.ps1 -Parameter Enable
 ```
 
 ## 🔐 セキュリティ情報

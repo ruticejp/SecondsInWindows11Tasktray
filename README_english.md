@@ -75,28 +75,68 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Status
 
 ### 🌐 Language Settings
 
-#### PowerShell 5.0 (Windows Default)
+#### Command Line Language Specification
 ```cmd
-# Japanese display
-powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language ja
+# Enable seconds display with Japanese interface
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Enable -Language ja
 
-# English display
-powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
+# Disable seconds display with English interface
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Disable -Language en
+
+# Check current status with Japanese interface
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Status -Language ja
 
 # Auto-detection (Default)
 # Automatically detects system language settings when language parameter is omitted
 ```
 
-#### PowerShell 7 Series
+#### GUI Language Specification
 ```cmd
-# Japanese display
-pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language ja
+# Launch GUI with Japanese interface
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language ja
 
-# English display
-pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
+# Launch GUI with English interface
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 
 # Auto-detection (Default)
-# Automatically detects system language settings when language parameter is omitted
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1
+```
+
+### 💡 Usage Examples and Tab Completion
+
+PowerShell's tab completion feature allows easy input of parameter names and values:
+
+```cmd
+# Parameter name completion
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -E<TAB>  # → -Enable
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -D<TAB>  # → -Disable
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -S<TAB>  # → -Status
+
+# Language parameter value completion
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language j<TAB>  # → ja
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language e<TAB>  # → en
+```
+
+### 📖 Help Feature
+
+You can check detailed script information using PowerShell's built-in help feature:
+
+```cmd
+# Display basic usage
+Get-Help .\ClockSeconds.ps1
+
+# Display detailed help
+Get-Help .\ClockSeconds.ps1 -Detailed
+
+# Display usage examples
+Get-Help .\ClockSeconds.ps1 -Examples
+
+# Display complete help
+Get-Help .\ClockSeconds.ps1 -Full
+
+# Display details for specific parameters
+Get-Help .\ClockSeconds.ps1 -Parameter Language
+Get-Help .\ClockSeconds.ps1 -Parameter Enable
 ```
 
 ## 🔐 Security Information
