@@ -5,14 +5,14 @@ Windows11（22H2）以降でタスクトレイに秒表示できない時に使�
 
 ## ⚠️ 重要事項
 
-**所属する組織（学校、企業等）のポリシー違反にご注意ください**
+**所属組織（学校、企業等）の運用ルール・セキュリティポリシー違反にご注意ください**
 
-組織が意図的に秒表示を無効にしている場合、このツールの使用がポリシー違反となる可能性があります。  
+組織が意図的に秒表示を無効にしている場合、このツールの使用が組織の運用ルールやセキュリティポリシー違反となる可能性があります。  
 **必ず事前に管理者へ確認を取ってからご利用ください。**
 
 ## 📋 概要
 
-このツールは、組織のポリシー制限により通常の設定画面から秒表示を有効にできない場合に、レジストリを直接操作してタスクトレイの時計に秒を表示させるためのPowerShellスクリプトです。
+このツールは、組織のグループポリシーやドメインポリシー制限により通常の設定画面から秒表示を有効にできない場合に、レジストリを直接操作してタスクトレイの時計に秒を表示させるためのPowerShellスクリプトです。
 
 ## 🚀 使い方
 
@@ -116,9 +116,9 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 > **📝 補足情報**  
 > 初回実行時や新しいユーザープロファイルでは、レジストリ値が存在しない場合があります。この場合、スクリプトは自動的に「秒を表示しない」状態として認識し、適切に動作します。
 
-## ⚙️ ポリシー制限がない場合の標準設定方法
+## ⚙️ 個人PC・家庭PCでの標準設定方法
 
-組織のポリシー制限がない環境では、以下の手順で設定可能です：
+組織のドメイン・グループポリシー制限がない環境（個人PC、家庭PC、Active DirectoryやAzure ADに参加していないPC等）では、以下の手順で設定可能です：
 
 1. 🖱️ **スタートボタンを右クリック** → 「設定」を開く
 2. 👤 **左メニューから「個人用設定」** を選択
@@ -126,16 +126,35 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 4. ⚙️ **「タスクバーの動作」** を選択
 5. ⏰ **「システムトレイの時計に秒を表示する（電力消費が増加します）」** にチェックを入れる
 
+> **💡 補足**  
+> 上記の設定画面で該当項目がグレーアウトしている場合や設定できない場合は、組織のグループポリシーやローカルポリシーによる制限がかかっている可能性があります。その場合、このツールをご利用ください。
+
 ---
 
 ## 📁 ファイル構成
 
+### 🎯 実行ファイル
 | ファイル名 | 説明 |
 |------------|------|
 | `ClockSeconds.ps1` | メインのPowerShellスクリプト（GUI版・CUI版両対応） |
 | `RunToggleClockSecondsGUI.bat` | 実行用バッチファイル（推奨・最も簡単） |
+| `VerifySignature.ps1` | 電子署名検証スクリプト（Authenticode + Ed25519） |
+
+### 📚 ドキュメント
+| ファイル名 | 説明 |
+|------------|------|
 | `README.md` | このドキュメント（日本語版） |
 | `README_english.md` | 英語版ドキュメント |
+| `LICENSE` | Apache License 2.0 ライセンス文書 |
+
+### 🔐 電子署名ファイル
+| ファイル名 | 説明 |
+|------------|------|
+| `ClockSeconds.cer` | Authenticode証明書（検証用・インポート不要） |
+| `ClockSeconds_ed25519.pub` | Ed25519公開鍵（ClockSeconds.ps1用） |
+| `ClockSeconds.sig` | Ed25519署名ファイル（ClockSeconds.ps1用） |
+| `VerifySignature_ed25519.pub` | Ed25519公開鍵（VerifySignature.ps1用） |
+| `VerifySignature.sig` | Ed25519署名ファイル（VerifySignature.ps1用） |
 
 ## 🔧 動作環境
 
@@ -146,6 +165,66 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 | **フレームワーク** | .NET Framework（PowerShell 5.0使用時） |
 | **権限** | 標準ユーザー権限（管理者権限不要） |
 
+### 📦 外部ツール（任意）
+
+| ツール | 用途 | 入手先 |
+|--------|------|--------|
+| **OpenSSL** | Ed25519署名の検証 | [公式サイト](https://www.openssl.org/) |
+
+> **💡 補足**  
+> OpenSSLは署名検証時のみ使用される任意の依存関係です。メイン機能には不要です。
+
+## 🔐 スクリプト署名の検証方法
+
+このプロジェクトのPowerShellスクリプトは、セキュリティ確保のために電子署名が施されています。
+
+### 📋 署名方式
+
+| 署名方式 | 対象ファイル | 用途 |
+|----------|-------------|------|
+| **Authenticode** | `ClockSeconds.ps1`, `VerifySignature.ps1` | PowerShell標準の署名検証 |
+| **Ed25519** | `ClockSeconds.ps1`, `VerifySignature.ps1` | OpenSSLによる高セキュリティ署名 |
+
+### ✅ 自動署名検証（利用者操作不要）
+
+PowerShellスクリプトには署名が埋め込まれており、**証明書のインポートなどの事前設定は不要**です。
+
+```powershell
+# PowerShellによる自動署名検証
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1
+```
+
+> **⚠️ セキュリティ重要事項**  
+> 
+> **証明書マネージャ（certmgr.msc）への証明書インポートは不要かつ非推奨です。**
+> 
+> - 🚫 `.cer`ファイルを「信頼されたルート証明機関」にインポートしない
+> - 🚫 自己署名証明書のインポートはセキュリティリスクとなる
+> - ✅ スクリプトの署名検証は自動実行される
+> - ✅ 追加の証明書設定は不要
+>
+> 証明書をインポートすると、同じ証明書で署名された悪意のあるスクリプトもシステムが信頼してしまう危険があります。
+
+### 🔍 手動署名検証（上級者向け）
+
+署名の詳細を確認したい場合は、以下の方法で検証できます：
+
+#### Authenticode署名の確認
+```powershell
+Get-AuthenticodeSignature ClockSeconds.ps1
+```
+
+#### Ed25519署名の確認（OpenSSL要）
+```bash
+openssl pkeyutl -verify -inkey ClockSeconds_ed25519.pub -pubin -sigfile ClockSeconds.sig -in ClockSeconds.ps1
+```
+
+#### 包括的な署名検証
+```powershell
+# 両方の署名を自動検証
+.\VerifySignature.ps1
+```
+
 ## 📞 サポート
 
 - **GitHub Issues**: [問題報告・機能要望](https://github.com/ruticejp/SecondsInWindows11Tasktray/issues)
@@ -154,6 +233,15 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 ## 📄 ライセンス
 
 このプロジェクトは [Apache License 2.0](LICENSE) の下でライセンスされています。
+
+### 🔗 外部依存関係
+
+| 依存関係 | ライセンス | 用途 |
+|----------|-----------|------|
+| **OpenSSL** | [Apache License 2.0](https://www.openssl.org/source/license.html) | Ed25519署名検証（任意） |
+
+> **📝 補足**  
+> OpenSSLは任意の外部ツールであり、基本機能には必要ありません。署名検証を行う場合のみ使用されます。
 
 ```
 Copyright 2025 ruticejp

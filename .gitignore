@@ -11,6 +11,14 @@
 *.sln.docstates
 *.env
 
+# Private keys and sensitive files
+*.key
+*_private.*
+*.pem
+*.p12
+*.pfx
+ed25519_private.key
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -411,3 +419,15 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Ed25519 Private Keys and related sensitive files
+ed25519_private.key
+*_private.key
+*.key.bak
+*.key.backup
+*_private_*
+ed25519_private*
+private_key*
+*.pem
+*.p12
+*.pfx

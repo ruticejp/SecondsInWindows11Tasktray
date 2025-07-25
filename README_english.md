@@ -10,14 +10,14 @@ Created for situations where organizational policies are in place
 
 ## ⚠️ Important Notice
 
-**Please be aware of potential policy violations within your organization (school, company, etc.)**
+**Please be aware of potential operational rules and security policy violations within your organization (school, company, etc.)**
 
-If your organization has intentionally disabled seconds display, using this tool may constitute a policy violation.  
+If your organization has intentionally disabled seconds display, using this tool may constitute a violation of your organization's operational rules or security policies.  
 **Please ensure you obtain confirmation from your administrator before use.**
 
 ## 📋 Overview
 
-This tool is a PowerShell script that directly manipulates the registry to display seconds in the taskbar clock when organizational policy restrictions prevent enabling seconds display through the normal settings interface.
+This tool is a PowerShell script that directly manipulates the registry to display seconds in the taskbar clock when organizational Group Policy or domain policy restrictions prevent enabling seconds display through the normal settings interface.
 
 ## 🚀 Usage
 
@@ -121,9 +121,9 @@ This script operates only on the current user's registry area (HKCU), so **admin
 > **📝 Supplementary Information**  
 > During initial execution or with new user profiles, the registry value may not exist. In such cases, the script automatically recognizes the state as "do not display seconds" and operates appropriately.
 
-## ⚙️ Standard Setting Method When No Policy Restrictions
+## ⚙️ Standard Setting Method for Personal/Home PCs
 
-In environments without organizational policy restrictions, you can configure settings through the following steps:
+In environments without organizational domain/Group Policy restrictions (personal PCs, home PCs, PCs not joined to Active Directory or Azure AD, etc.), you can configure settings through the following steps:
 
 1. 🖱️ **Right-click Start button** → Open "Settings"
 2. 👤 **Select "Personalization"** from the left menu
@@ -131,16 +131,35 @@ In environments without organizational policy restrictions, you can configure se
 4. ⚙️ **Select "Taskbar behaviors"**
 5. ⏰ **Check "Show seconds in system tray clock (increases power consumption)"**
 
+> **💡 Note**  
+> If the setting item is grayed out or cannot be configured in the above settings screen, there may be restrictions due to organizational Group Policy or local policy. In such cases, please use this tool.
+
 ---
 
 ## 📁 File Structure
 
+### 🎯 Executable Files
 | File Name | Description |
 |-----------|-------------|
 | `ClockSeconds.ps1` | Main PowerShell script (supports both GUI and CUI versions) |
 | `RunToggleClockSecondsGUI.bat` | Execution batch file (recommended, easiest) |
-| `README.md` | This document (Japanese version) |
-| `README_english.md` | English version document |
+| `VerifySignature.ps1` | Digital signature verification script (Authenticode + Ed25519) |
+
+### � Documentation Files
+| File Name | Description |
+|-----------|-------------|
+| `README.md` | Main documentation (Japanese version) |
+| `README_english.md` | English version documentation |
+| `LICENSE` | Apache License 2.0 license document |
+
+### 🔐 Digital Signature Files
+| File Name | Description |
+|-----------|-------------|
+| `ClockSeconds.cer` | Authenticode certificate (for verification, no import needed) |
+| `ClockSeconds_ed25519.pub` | Ed25519 public key (for ClockSeconds.ps1) |
+| `ClockSeconds.sig` | Ed25519 signature file (for ClockSeconds.ps1) |
+| `VerifySignature_ed25519.pub` | Ed25519 public key (for VerifySignature.ps1) |
+| `VerifySignature.sig` | Ed25519 signature file (for VerifySignature.ps1) |
 
 ## 🔧 System Requirements
 
@@ -150,6 +169,66 @@ In environments without organizational policy restrictions, you can configure se
 | **PowerShell** | PowerShell 5.0 or later, or PowerShell 7 series |
 | **Framework** | .NET Framework (when using PowerShell 5.0) |
 | **Permissions** | Standard user permissions (administrator rights not required) |
+
+### 📦 External Tools (Optional)
+
+| Tool | Purpose | Source |
+|------|---------|--------|
+| **OpenSSL** | Ed25519 signature verification | [Official Site](https://www.openssl.org/) |
+
+> **💡 Note**  
+> OpenSSL is an optional dependency used only during signature verification. It is not required for main functionality.
+
+## 🔐 Script Signature Verification
+
+PowerShell scripts in this project are digitally signed for security purposes.
+
+### 📋 Signature Methods
+
+| Signature Method | Target Files | Purpose |
+|------------------|-------------|---------|
+| **Authenticode** | `ClockSeconds.ps1`, `VerifySignature.ps1` | PowerShell standard signature verification |
+| **Ed25519** | `ClockSeconds.ps1`, `VerifySignature.ps1` | High-security signature via OpenSSL |
+
+### ✅ Automatic Signature Verification (No User Action Required)
+
+PowerShell scripts have embedded signatures, and **no pre-configuration such as certificate import is required**.
+
+```powershell
+# Automatic signature verification via PowerShell
+powershell -ExecutionPolicy Bypass -File ClockSeconds.ps1
+```
+
+> **⚠️ Critical Security Information**  
+> 
+> **Certificate import to Certificate Manager (certmgr.msc) is unnecessary and NOT recommended.**
+> 
+> - 🚫 Do not import `.cer` files to "Trusted Root Certification Authorities"
+> - 🚫 Importing self-signed certificates poses security risks
+> - ✅ Script signature verification runs automatically
+> - ✅ No additional certificate configuration needed
+>
+> Importing certificates may cause the system to trust malicious scripts signed with the same certificate.
+
+### 🔍 Manual Signature Verification (Advanced Users)
+
+For detailed signature verification, use the following methods:
+
+#### Authenticode Signature Verification
+```powershell
+Get-AuthenticodeSignature ClockSeconds.ps1
+```
+
+#### Ed25519 Signature Verification (Requires OpenSSL)
+```bash
+openssl pkeyutl -verify -inkey ClockSeconds_ed25519.pub -pubin -sigfile ClockSeconds.sig -in ClockSeconds.ps1
+```
+
+#### Comprehensive Signature Verification
+```powershell
+# Automatic verification of both signatures
+.\VerifySignature.ps1
+```
 
 ## 📞 Support
 
@@ -161,6 +240,15 @@ In environments without organizational policy restrictions, you can configure se
 ## 📄 License
 
 This project is licensed under the [Apache License 2.0](LICENSE).
+
+### 🔗 External Dependencies
+
+| Dependency | License | Purpose |
+|------------|---------|---------|
+| **OpenSSL** | [Apache License 2.0](https://www.openssl.org/source/license.html) | Ed25519 signature verification (optional) |
+
+> **📝 Note**  
+> OpenSSL is an optional external tool and is not required for basic functionality. It is only used when performing signature verification.
 
 ```
 Copyright 2025 ruticejp
