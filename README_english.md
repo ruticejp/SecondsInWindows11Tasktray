@@ -6,7 +6,7 @@ Created for situations where organizational policies are in place
 > **📝 Translation Note**  
 > This document is an English translation of the original Japanese README.md  
 > Original document created: July 24, 2025  
-> Translation date: July 24, 2025
+> Translation date: July 25, 2025
 
 ## ⚠️ Important Notice
 
@@ -281,5 +281,5 @@ limitations under the License.
 - **Original Language**: Japanese (README.md)
 - **Original Creation Date**: July 24, 2025
 - **Translation Language**: English
-- **Translation Date**: July 24, 2025
+- **Translation Date**: July 25, 2025
 - **Repository**: [SecondsInWindows11Tasktray](https://github.com/ruticejp/SecondsInWindows11Tasktray)
