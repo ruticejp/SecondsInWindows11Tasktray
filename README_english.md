@@ -174,10 +174,20 @@ In environments without organizational domain/Group Policy restrictions (persona
 
 | Tool | Purpose | Source |
 |------|---------|--------|
-| **OpenSSL** | Ed25519 signature verification | [Official Site](https://www.openssl.org/) |
+| **OpenSSL** | Ed25519 signature verification | [Official Site](https://www.openssl.org/)<br>[Windows Version](https://slproweb.com/products/Win32OpenSSL.html) |
 
 > **💡 Note**  
 > OpenSSL is an optional dependency used only during signature verification. It is not required for main functionality.
+
+> **⚠️ Important Notes on OpenSSL Versions**  
+> 
+> **We strongly recommend using OpenSSL 3.0 or later.**
+> 
+> - ✅ **Recommended**: OpenSSL 3.0 or later (Apache License 2.0)
+> - ⚠️ **Not Recommended**: OpenSSL 1.x series (OpenSSL License + SSLeay License)
+> - 🚫 **Ed25519 Not Supported**: OpenSSL 1.0.x series
+>
+> Older versions (1.x series) have **license compatibility issues** with this project's Apache License 2.0 and may contain **security vulnerabilities**. Additionally, OpenSSL 1.0.x series does not support Ed25519 signatures.
 
 ## 🔐 Script Signature Verification
 

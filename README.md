@@ -169,10 +169,20 @@ pwsh -ExecutionPolicy Bypass -File ClockSeconds.ps1 -Language en
 
 | ツール | 用途 | 入手先 |
 |--------|------|--------|
-| **OpenSSL** | Ed25519署名の検証 | [公式サイト](https://www.openssl.org/) |
+| **OpenSSL** | Ed25519署名の検証 | [公式サイト](https://www.openssl.org/)<br>[Windows版](https://slproweb.com/products/Win32OpenSSL.html) |
 
 > **💡 補足**  
 > OpenSSLは署名検証時のみ使用される任意の依存関係です。メイン機能には不要です。
+
+> **⚠️ OpenSSLバージョンに関する重要事項**  
+> 
+> **OpenSSL 3.0以降の使用を強く推奨します。**
+> 
+> - ✅ **推奨**: OpenSSL 3.0以降（Apache License 2.0）
+> - ⚠️ **非推奨**: OpenSSL 1.x系（OpenSSL License + SSLeay License）
+> - 🚫 **Ed25519未対応**: OpenSSL 1.0.x系
+>
+> 旧バージョン（1.x系）は本プロジェクトのApache License 2.0と**ライセンス互換性の問題**があり、**セキュリティ脆弱性**も存在する可能性があります。また、OpenSSL 1.0.x系ではEd25519署名がサポートされていません。
 
 ## 🔐 スクリプト署名の検証方法
 
